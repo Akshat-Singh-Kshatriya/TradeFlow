@@ -13,7 +13,7 @@ from sklearn.metrics import mean_squared_error
 class MarketConfig:
     SPOT_PRICE = 6986.00
     ATM_STRIKE = 7000.00
-    RISK_FREE_RATE = 0.054  # 5.4%
+    RISK_FREE_RATE = 0.054  
     DAYS_TO_EXPIRY = 23
     VOLATILITY = 0.25       # 25% IV
     SIM_DAYS = 365 * 2      # Generate 2 years of data
@@ -190,4 +190,5 @@ print(f"\n[RISK ANALYSIS]")
 print(f"Probability of Profit (PoP): {pop:.2f}%")
 print(f"Expected Value per Share: ₹{expected_value:.2f}")
 print(f"Value at Risk (95%): ₹{abs(var_95):.2f}")
+
 
