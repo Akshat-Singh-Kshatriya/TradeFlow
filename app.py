@@ -7,9 +7,6 @@ from sklearn.model_selection import TimeSeriesSplit
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.metrics import mean_squared_error
 
-# ==========================================
-# 1. ADVANCED CONFIGURATION & DATA SIMULATION
-# ==========================================
 class MarketConfig:
     SPOT_PRICE = 6986.00
     ATM_STRIKE = 7000.00
@@ -41,9 +38,6 @@ def generate_realistic_data(config):
     df = pd.DataFrame({'Date': dates, 'Close': prices})
     return df
 
-# ==========================================
-# 2. FEATURE ENGINEERING (TECHNICAL INDICATORS)
-# ==========================================
 def add_technical_indicators(df):
     df = df.copy()
     
@@ -74,10 +68,6 @@ def add_technical_indicators(df):
 raw_data = generate_realistic_data(MarketConfig)
 ml_data = add_technical_indicators(raw_data)
 
-# ==========================================
-# 3. ADVANCED MACHINE LEARNING (Gradient Boosting)
-# ==========================================
-print("--- TRAINING ADVANCED ML MODEL ---")
 
 # Target: Future Price
 ml_data['Target'] = ml_data['Close'].shift(-MarketConfig.DAYS_TO_EXPIRY)
@@ -104,9 +94,6 @@ current_spot = ml_data.iloc[-1]['Close']
 print(f"Current Spot: ₹{current_spot:.2f}")
 print(f"ML Predicted Spot (in {MarketConfig.DAYS_TO_EXPIRY} days): ₹{predicted_price:.2f}")
 
-# ==========================================
-# 4. BLACK-SCHOLES PRICING & GREEKS
-# ==========================================
 def black_scholes(S, K, T, r, sigma, option_type='call'):
     d1 = (np.log(S / K) + (r + 0.5 * sigma ** 2) * T) / (sigma * np.sqrt(T))
     d2 = d1 - sigma * np.sqrt(T)
@@ -159,11 +146,9 @@ print(f"\n[PORTFOLIO GREEKS]")
 print(f"Delta: {net_delta:.4f} (Directional Risk)")
 print(f"Gamma: {net_gamma:.4f} (Curvature Risk)")
 print(f"Theta: {net_theta:.2f} (Daily Time Decay Gain)")
-print(f"Vega:  {net_vega:.2f} (Sensitivity to Volatility)")
+print(f"Vega:  {net_vega:.2f} (Sensitivity to Volatility)"
 
-# ==========================================
-# 5. MONTE CARLO SIMULATION (PROBABILITY OF PROFIT)
-# ==========================================
+      
 SIMULATIONS = 10000
 simulated_end_prices = []
 
@@ -186,9 +171,9 @@ pop = np.mean(net_pnls > 0) * 100 # Probability of Profit
 expected_value = np.mean(net_pnls)
 var_95 = np.percentile(net_pnls, 5)
 
-print(f"\n[RISK ANALYSIS]")
 print(f"Probability of Profit (PoP): {pop:.2f}%")
 print(f"Expected Value per Share: ₹{expected_value:.2f}")
 print(f"Value at Risk (95%): ₹{abs(var_95):.2f}")
+
 
 
